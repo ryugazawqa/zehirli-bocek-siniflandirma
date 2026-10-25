@@ -78,7 +78,7 @@ Modelin "tırtılsa zehirlidir" gibi kestirmeler öğrenmemesi için her zehirli
 | Megalopygidae / Sphingidae | %15 | %20 |
 | Reduviidae / Pentatomidae | %19 | %21 |
 
-"Uyarı rengi oranı > eşik ise zehirli" kuralı en iyi eşikte bile **~%50** doğrulukta kaldı (yazı-tura düzeyi). Arı taklitçisi Syrphidae, eşek arısından daha sarı çıktı. Bu nedenle şekil, doku ve rengi birlikte öğrenen CNN'ler kullanıldı (ConvNeXt-Tiny %92,3).
+"Uyarı rengi oranı > eşik ise zehirli" kuralı en iyi eşikte bile **~%50** doğrulukta kaldı (yazı-tura düzeyi). Ayrı `goruntu_isleme.ipynb` notebook'unda 5 farklı çiftin (Vespidae/Syrphidae, Meloidae/Chrysomelidae, Megalopygidae/Saturniinae, Limacodidae/Sphingidae, Reduviidae/Pentatomidae) en çok beğenilen 250 fotoğrafıyla tekrarlandığında da sonuç **~%55** oldu. Arı taklitçisi Syrphidae, eşek arısından daha sarı çıktı. Bu nedenle şekil, doku ve rengi birlikte öğrenen CNN'ler kullanıldı (ConvNeXt-Tiny %92,3).
 
 ## Dosyalar
 
@@ -88,6 +88,7 @@ Modelin "tırtılsa zehirlidir" gibi kestirmeler öğrenmemesi için her zehirli
 | `veri_ek.ipynb` | Benzer görünümlü 14 ek grubun toplanması |
 | `egitim_v3.ipynb` | Veri çekme, Model A/B eğitimi, TTA, eşik analizi, RF/SVM/LR, Grad-CAM |
 | `egitim_v4_omurga.ipynb` | EfficientNet-B0 / B3 / ConvNeXt-Tiny karşılaştırması + klasik görüntü işleme bölümü (çıktılı) |
+| `goruntu_isleme.ipynb` | Yalnızca görüntü işleme (çıktılı, GPU gerekmez): piksel matrisi, RGB, histogram, CLAHE, filtreler ve PSNR, evrişim çekirdekleri, Sobel/Canny, HSV maskesi, morfoloji, Otsu/GrabCut, renk analizi |
 
 ## Çalıştırma
 
