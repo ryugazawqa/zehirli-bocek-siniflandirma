@@ -39,6 +39,7 @@ Modelin "tırtılsa zehirlidir" gibi kestirmeler öğrenmemesi için her zehirli
 8. **Eşik analizi:** F1-en iyi eşik ve zehirlilerin ≥%90'ını yakalayan "güvenli" eşik
 9. **Klasik ML karşılaştırması:** CNN özellik vektörleri üzerinde Random Forest, SVM, Lojistik Regresyon
 10. **Grad-CAM:** Modelin fotoğrafın neresine baktığının görselleştirilmesi
+11. **Klasik görüntü işleme (OpenCV):** Piksel matrisi, RGB kanalları, histogram ve histogram eşitleme / CLAHE, gürültü filtreleri (ortalama, Gauss, medyan, bilateral) ve PSNR, evrişim çekirdekleri ve kenar bulma (Sobel, Laplace, Canny), HSV uyarı rengi maskesi, morfolojik işlemler, Otsu ve GrabCut segmentasyonu, kontur
 
 ## Sonuçlar
 
@@ -66,6 +67,19 @@ Modelin "tırtılsa zehirlidir" gibi kestirmeler öğrenmemesi için her zehirli
 - ConvNeXt-Tiny ek veri kullanılmadan en iyi sonucu verdi.
 - En zor çift **Reduviidae ↔ Pentatomidae** oldu.
 
+### Klasik görüntü işleme: renk tek başına yeter mi?
+
+4 benzer çiftte (200 fotoğraf) böcek GrabCut ile arka plandan ayrıldı ve yalnızca böceğin üzerindeki uyarı rengi (sarı + kırmızı, HSV maskesi) oranı ölçüldü:
+
+| Çift | Zehirlide uyarı rengi | Zehirsizde uyarı rengi |
+|---|---|---|
+| Vespidae / Syrphidae | %23 | %48 |
+| Apis mellifera / Meliponini | %48 | %39 |
+| Megalopygidae / Sphingidae | %15 | %20 |
+| Reduviidae / Pentatomidae | %19 | %21 |
+
+"Uyarı rengi oranı > eşik ise zehirli" kuralı en iyi eşikte bile **~%50** doğrulukta kaldı (yazı-tura düzeyi). Arı taklitçisi Syrphidae, eşek arısından daha sarı çıktı. Bu nedenle şekil, doku ve rengi birlikte öğrenen CNN'ler kullanıldı (ConvNeXt-Tiny %92,3).
+
 ## Dosyalar
 
 | Notebook | İçerik |
@@ -73,13 +87,13 @@ Modelin "tırtılsa zehirlidir" gibi kestirmeler öğrenmemesi için her zehirli
 | `veri_toplama.ipynb` | İlk 24 grubun iNaturalist'ten toplanması |
 | `veri_ek.ipynb` | Benzer görünümlü 14 ek grubun toplanması |
 | `egitim_v3.ipynb` | Veri çekme, Model A/B eğitimi, TTA, eşik analizi, RF/SVM/LR, Grad-CAM |
-| `egitim_v4_omurga.ipynb` | EfficientNet-B0 / B3 / ConvNeXt-Tiny karşılaştırması |
+| `egitim_v4_omurga.ipynb` | EfficientNet-B0 / B3 / ConvNeXt-Tiny karşılaştırması + klasik görüntü işleme bölümü (çıktılı) |
 
 ## Çalıştırma
 
 Notebook'lar Kaggle'da (GPU T4) hazırlandı. `egitim_v3.ipynb` ve `egitim_v4_omurga.ipynb` girdi veri seti gerektirmez, fotoğrafları doğrudan iNaturalist'ten çeker. Kaggle'da **Internet** ve **GPU** açık olmalıdır.
 
-Kullanılan kütüphaneler: `torch`, `torchvision`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `Pillow`, `requests`
+Kullanılan kütüphaneler: `torch`, `torchvision`, `opencv-python`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `Pillow`, `requests`
 
 ## Lisans ve atıf
 
